@@ -97,7 +97,8 @@ class Perceptron(object):
             X = np.array(X)
         except:
             print("训练数据不满足要求")
-        
+        X = X * self.__alpha       
+
         label = set(y)
         if len(label) > 2:
             print("label标签不满足二分类的要求,")
@@ -122,7 +123,7 @@ class Perceptron(object):
                     self.__b = self.__b + self.__eta * target
                 
             iter += 1
-            X,y = self.__shuffleData(X,y)
+            # X,y = self.__shuffleData(X,y)
             # print(X,y)
             pervious_loss = cur_loss
             cur_loss = temp_loss
@@ -138,7 +139,7 @@ class Perceptron(object):
         '''
         return 参数W和b
         '''
-        return self.__W, self.__b
+        return self.__W / self.__alpha, self.__b / self.__alpha
 
     def source(self,X,y):
         """
@@ -153,6 +154,7 @@ class Perceptron(object):
         except:
             print("训练数据不满足要求")
         
+        X = X * self.__alpha
         label = set(y)
         if len(label) > 2:
             print("label标签不满足二分类的要求,")
@@ -180,6 +182,8 @@ class Perceptron(object):
         # 只有一个元素
         if len(X.shape) == 1:
             X = np.array([X])
+        
+        X = X * self.__alpha
         y_pre = np.sign(np.sum(X * self.__W + self.__b,axis=AXIS))
         y_pre[y_pre==-1]=0
 
