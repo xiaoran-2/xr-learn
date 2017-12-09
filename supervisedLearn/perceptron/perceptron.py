@@ -1,3 +1,4 @@
+# _*_coding:utf-8_*_
 # Author: xiaoran
 # Time: 2017-12-05 21:10
 # perceptron
@@ -46,6 +47,13 @@ class Perceptron(object):
         self.__eta = eta
         self.__W = None
         self.__b = None
+
+
+    def __str__(self):
+        '''
+        格式化输出
+        '''
+        return "%s" % (self.__penalty)
 
     def __resample(self,X,start,end):
         '''X[start,end]
@@ -134,6 +142,12 @@ class Perceptron(object):
             # 设置了tol参数,而且满足条件,进直接返回
             if pervious_loss != None and self.__tol != None  and np.abs(pervious_loss - cur_loss) < self.__tol:
                 return
+            
+        # 返回所有的参数self, penalty=None, 0.0001, 500, 
+        return self                 
+        # print("Perceptron(penalty=%s, alpha=%f, max_iter=%d, tol=%f, verbose=%f, shuffle=%b, eta=%f)" 
+        #      % (self.__penalty, self.__alpha, self.__max_iter, self.__tol, self.__verbose, self.__shuffle, self.__eta))
+
     
     def get_params(self):
         '''
